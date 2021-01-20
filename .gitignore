@@ -1,6 +1,6 @@
 config.json
 /.vscode
-*.ssh
+*.ppk
 # Logs
 logs
 *.log
