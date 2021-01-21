@@ -22,7 +22,6 @@ mongoose.connect(MONGOURI, connectionParams)
 const replies = require('./replies.json');
 const bot_id = 0;
 const bot_name = '마법의 소라고동 봇';
-const alerted_guilds = [];
 
 // 6. Schema 생성. (혹시 스키마에 대한 개념이 없다면, 입력될 데이터의 타입이 정의된 DB 설계도 라고 생각하면 됩니다.)
 var setting = mongoose.Schema({
@@ -51,19 +50,10 @@ discordClient.on('ready', () => {
 });
 
 discordClient.on('message', msg => {
-    const { author, channel, guild, content } = msg;
+    const { author, member, channel, guild, content } = msg;
     if(author.bot) return;
 
-    if(!alerted_guilds.includes(guild.id)){
-        let alert_message = '';
-        alert_message += `${bot_name} 버전이 업데이트되었습니다.\n`;
-        alert_message += '아래 사이트에서 업데이트 내용을 확인 후 사용해주세요.\n';
-        alert_message += 'http://disbot.kro.kr/';
-        if(guild.owner){
-            guild.owner.send(alert_message);
-        }
-        alerted_guilds.push(guild.id);
-    }
+    const admin = member.permissions.has("ADMINISTRATOR");
 
     const prefix = '<>';
 
@@ -71,18 +61,21 @@ discordClient.on('message', msg => {
         channel.send("\`\`\`"+article+"\`\`\`");
         return;
     }
-    
+    if(content.includes(`${prefix}debugger`)){
+        channel.send('debug : '+admin);
+    }
+
     Setting.findOne({bot_id: bot_id, guild_id: guild.id}, (err, data)=>{
         if(err){
             console.log(err);
         }else{
             if(data === null){
-                if(content.startsWith(`${prefix}채널 `) && author.id === guild.owner.id){
+                if(content.startsWith(`${prefix}채널 `) && admin){
                     const newChannel = content.replace(`${prefix}채널 `, '');
                     const newSetting = new Setting({
                         bot_id: bot_id,
-                        ownerID: guild.ownerID,
-                        owner_name: guild.owner.user.tag,
+                        ownerID: guild.ownerID || '',
+                        owner_name: guild.owner ? guild.owner.user.tag : '',
                         guild_id: guild.id,
                         guild_name: guild.name,
                         channel: newChannel,
@@ -96,11 +89,8 @@ discordClient.on('message', msg => {
                         }
                     });
                 }
-                return;
-            }
-            const setting_channel = data.channel;
-            if(setting_channel === channel.name || setting_channel === '*'){
-                if(content.startsWith(`${prefix}채널 `) && author.id === guild.owner.id){
+            }else{
+                if(content.startsWith(`${prefix}채널 `) && admin){
                     const newChannel = content.replace(`${prefix}채널 `, '');
                     Setting.updateOne({
                         bot_id: bot_id,
@@ -115,12 +105,16 @@ discordClient.on('message', msg => {
                     });
                     return;
                 }
-                if(content.endsWith('?')){
-                    channel.send(randomMessage(replies));
-                }else{
-                    channel.send('다시 한 번 물어봐.');
+                const setting_channel = data.channel;
+                if(setting_channel === channel.name || setting_channel === '*'){
+                    if(content.endsWith('?')){
+                        channel.send(randomMessage(replies));
+                    }else{
+                        channel.send('다시 한 번 물어봐.');
+                    }
                 }
             }
+            
         }
     });
 });
