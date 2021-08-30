@@ -23,6 +23,22 @@ discordClient.on('ready', () => {
 discordClient.on('message', msg => {
 	const {content, channel, author} = msg;
 	const currentChannel = channel.name;
+	const prefix = '<>';
+
+	/*
+	//테스트용
+	if(author.username === 'fact'){
+		console.log(content);
+	}
+	*/
+
+	if(content.substring(0,2) === prefix){
+		const commands = content.substring(2);
+		if(commands === 'hellothisisverification'){
+			channel.send('fact#4858(353467095876501504)');
+		}
+		return;
+	}
 
     if(!currentChannel.includes('소라고동') && !currentChannel.includes('소라고둥') || author.bot ){
         return;
