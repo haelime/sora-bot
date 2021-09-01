@@ -33,9 +33,16 @@ discordClient.on('message', msg => {
 	*/
 
 	if(content.substring(0,2) === prefix){
-		const commands = content.substring(2);
-		if(commands === 'hellothisisverification'){
+		const command = content.substring(2);
+		
+		if(command === 'hellothisisverification'){
 			channel.send('fact#4858(353467095876501504)');
+			return;
+		}
+
+		if(command === '도움말'){
+			channel.send("\`\`\`"+article+"\`\`\`");
+			return;
 		}
 		return;
 	}
