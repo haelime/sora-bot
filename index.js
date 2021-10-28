@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const discordClient = new Discord.Client();
 const { TOKEN } = require('./config.json');
 const fs = require('fs');
-const article = fs.readFileSync("README.txt").toString();
+const article = fs.readFileSync("README.md").toString();
 
 const replies = require('./replies.json');
 
@@ -55,7 +55,11 @@ discordClient.on('message', msg => {
         return;
     }
     if(content.endsWith('?')){
-        channel.send(randomMessage(replies));
+		let tempReplies = replies;
+		if(['되', '된', '될', '됨', '됩', '됫', '됬', '돼', '됀', '됄', '됌', '됍', '됐', '됐'].some((word)=>content.includes(word))){
+			tempReplies = [...tempReplies, '안돼.', '안.돼.'];
+		} 
+        channel.send(randomMessage(tempReplies));
     }else{
         channel.send('다시 한 번 물어봐.');
     }
