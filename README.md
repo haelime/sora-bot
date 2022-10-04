@@ -27,6 +27,3 @@ https://discord.com/oauth2/authorize?client_id=739457900875087932&permissions=67
 
 ## 제작자
 fact#4858(353467095876501504)
-
-## 개인 정보 보호 정책
-애초에 수집 자체를 안함
