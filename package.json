@@ -4,20 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wjdskagjs1/sora-bot.git"
+    "url": "git+https://github.com/fact-0/sora-bot.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wjdskagjs1/sora-bot/issues"
+    "url": "https://github.com/fact-0/sora-bot/issues"
   },
-  "homepage": "https://github.com/wjdskagjs1/sora-bot2#readme",
+  "homepage": "https://github.com/fact-0/sora-bot#readme",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^14.7.1"
   }
 }
