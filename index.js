@@ -36,12 +36,14 @@ const replies = [
 	"그래.",
 	"맞아.",
 	"어.",
-	"아니."
+	"아니.",
+	"안돼.",
+	"안.돼."
 ];
 const TEST_MODE = false;
 const isTest = function(author){
 	if(!TEST_MODE) return false;
-	
+
 	return author.username !== "fact";
 }
 
