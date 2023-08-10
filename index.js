@@ -69,6 +69,7 @@ client.on('messageCreate', message => {
 	try {
 		const {content, channel, author} = message;
 		
+		if(['소라고둥', '소라고동'].every(word=>!channel.name.includes(word))) return;
 		if(author.bot) return;
 
 		//테스트용
