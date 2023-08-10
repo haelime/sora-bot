@@ -76,8 +76,6 @@ client.on('messageCreate', message => {
 
 		if(content.startsWith("마법의 소라고동님") || content.endsWith('?')){
 			message.reply(randomMessage(replies));
-		}else{
-			message.reply('다시 한 번 물어봐.');
 		}
 
 	} catch (error) {
