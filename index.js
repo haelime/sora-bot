@@ -81,7 +81,7 @@ client.on('messageCreate', message => {
 		//테스트용
 		if (isTest(author)) return;
 
-		if (content.startsWith("마법의 소라고동님") || content.endsWith('?')) {
+		if (content.startsWith("마법의 소라고동님") || content.startsWith("소라고동님") || content.endsWith('?')) {
 			message.reply(randomMessage(replies));
 		}
 
